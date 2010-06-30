@@ -17,12 +17,19 @@ class tx_lint_checker {
 	 */
 	public function getTsrefXml() {
 		if (!($this->tsrefXml instanceof SimpleXMLElement)) {
-			$this->tsrefXml = simplexml_load_file(PATH_typo3.'sysext/t3editor/res/tsref/tsref.xml');
+			// $this->tsrefXml = simplexml_load_file(PATH_typo3.'sysext/t3editor/res/tsref/tsref.xml');
+			$this->tsrefXml = simplexml_load_file(t3lib_extMgm::extPath('lint').'tsref.xml');
 		}
 		return $this->tsrefXml;
 	}
 	
-	
+	/**
+	 * Check
+	 * 
+	 * @param mixed $ts (should be an array)
+	 * @param string $type
+	 * @return void
+	 */
 	public function check($ts, $type) {
 		if (!empty($ts)) {
 			if (!is_array($ts)) {
@@ -51,10 +58,22 @@ class tx_lint_checker {
 		}
 	}
 	
+	/**
+	 * Check if the given type is a simple one
+	 * 
+	 * @param string $type
+	 * @return bool true if simple type
+	 */
 	public function isSimpleType($type) {
 		return in_array($type, array('boolean', 'string'));
 	}
 	
+	/**
+	 * Remove dot
+	 * 
+	 * @param string $property
+	 * @return string property key without dot
+	 */
 	public function getPropertyWithoutDot($property) {
 		if (substr($property, -1) == '.') {
 			$property = substr($property, 0, -1);
@@ -62,6 +81,12 @@ class tx_lint_checker {
 		return $property;
 	}
 	
+	/**
+	 * Check array (for COA,...)
+	 * 
+	 * @param mixed typoscript (should be an array)
+	 * @return void
+	 */
 	public function checkArray($ts) {
 		if (!is_null($ts)) {
 			if (!is_array($ts)) {
@@ -76,10 +101,22 @@ class tx_lint_checker {
 		}
 	}
 	
+	/**
+	 * Checks if a value is boolean
+	 * 
+	 * @param mixed $val
+	 * @return bool
+	 */
 	public function is_boolean($val) {
 		return strcmp($val, '0') == 0 || strcmp($val, '1') == 0; 
 	}
 
+	/**
+	 * Checks if a value is numerical
+	 * 
+	 * @param mixed $val
+	 * @return bool
+	 */
 	public function is_numerical($val) {
 		$str = strval($val);
 		return ctype_digit($str) && (strlen($str) == 1 || $str[0] != '0') && (intval($val) >= 1);
