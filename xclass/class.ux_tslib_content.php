@@ -47,7 +47,7 @@ class ux_tslib_cObj extends tslib_cObj {
 	 * @see cObjGetSingle()
 	 */
 	function cObjGet($setup,$addKey='')	{
-		$this->getLinkChecker()->checkArray($setup);
+		// $this->getLinkChecker()->checkArray($setup);
 		return parent::cObjGet($setup, $addKey);
 	}
 

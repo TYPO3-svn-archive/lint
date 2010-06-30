@@ -44,11 +44,9 @@ class tx_lint_checker {
 				if ($propertyType == 'boolean' && !$this->is_boolean($propertyValue)) {
 					throw new tx_lint_exception(sprintf('"%s" for property "%s" is not a boolean value', $propertyValue, $property));
 				}
-				/*
 				if ($this->isSimpleType($propertyType) && !empty($ts[$property.'.'])) {
 					throw new tx_lint_exception(sprintf('Property "%s" (type: "%s") must not have subconfiguration', $property, $propertyType));
 				}
-				*/
 			}
 		}
 	}
